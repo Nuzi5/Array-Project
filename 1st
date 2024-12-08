@@ -7,14 +7,14 @@ public class Main{
         playGame();
     }
     public static void playGame(){
-        final int MAX_ATTEMPTS = 5;
-        final int CARGO_AMOUNT = 3;
-        final int DISTANCE = 7;
+        int MAX_ATTEMPTS = 5;
+        int CARGO_AMOUNT = 3;
+        int DISTANCE = 7;
 
         Scanner scanner = new Scanner (System.in);
 
-        while (true){
-            int [] cargoLocations=getRandomCargoLocations(CARGO_AMOUNT, DISTANCE);
+        while (true) {
+            int[] cargoLocations=getRandomCargoLocations(CARGO_AMOUNT, DISTANCE);
 
             System.out.println("\nStart! Find all hidden cargo locations!\nYou have 5 attempts to won a game.");
 
@@ -26,7 +26,6 @@ public class Main{
                 int [] guesses = getUserGuesses(scanner, CARGO_AMOUNT, DISTANCE);
 
                 int correctCount=ifGuessesTrue(cargoLocations, guesses);
-
 
                 if (correctCount == CARGO_AMOUNT) {
                     System.out.println("\nCongratulations! You found all the cargo!");
@@ -43,14 +42,24 @@ public class Main{
                 System.out.println("\nGame over! You couldn't find all hidden cargo.");
                 System.out.println(Arrays.toString(cargoLocations));
             }
-            System.out.println("\nDo you want to try again? (write yes or no): ");
-            String playAgain = scanner.next();
-            if (!playAgain.equalsIgnoreCase("yes")){
-                System.out.println("\nGoodbye!)");
-                break;
+
+
+            boolean validInput = false;
+	    while (!validInput){
+		System.out.println("\nDo you want to try again? (write yes or no): ");
+                String playAgain = scanner.next();
+                if (playAgain.equalsIgnoreCase("no")) {
+                    System.out.println("\nGoodbye!");
+                    return; // Выход из программы
+                } else if (playAgain.equalsIgnoreCase("yes")) {
+                    validInput = true; // Разрешаем перезапуск игры
+                } else {
+                    System.out.println("Answer only yes or no!");
+                }
             }
         }
     }
+
     public static int[] getRandomCargoLocations(int countOfCargo, int intervalOfHidden) {
         Random random = new Random();
         int[] locations = new int[countOfCargo];
