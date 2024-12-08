@@ -74,11 +74,6 @@ public class Main{
             while (true) {
                 try {
                     guesses[i] = scanner.nextInt();
-//                    if (guesses.length != countOfHidden) {
-//                        System.out.println("Error! Enter only 3 guesses.");
-//                        errorDisplayed=true;
-//                        scanner.next();
-//                    }else
                     if (guesses[i] >= 1 && guesses[i] <= intervalOfHidden) {
                         break;
                     } else {
@@ -112,7 +107,4 @@ public class Main{
         }
         return countTrueGuesses;
     }
-
-//   public static void (){
-//    }
 }
