@@ -50,9 +50,9 @@ public class Main{
                 String playAgain = scanner.next();
                 if (playAgain.equalsIgnoreCase("no")) {
                     System.out.println("\nGoodbye!");
-                    return; // Выход из программы
+                    return; 
                 } else if (playAgain.equalsIgnoreCase("yes")) {
-                    validInput = true; // Разрешаем перезапуск игры
+                    validInput = true; 
                 } else {
                     System.out.println("Answer only yes or no!");
                 }
@@ -78,32 +78,25 @@ public class Main{
     }
     public static int[] getUserGuesses(Scanner scanner, int countOfHidden, int intervalOfHidden) {
         int[] guesses = new int[countOfHidden];
-        for (int i = 0; i < countOfHidden; i++) {
-            boolean errorDisplayed = false;
-            while (true) {
-                try {
-                    guesses[i] = scanner.nextInt();
-                    if (guesses[i] >= 1 && guesses[i] <= intervalOfHidden) {
-                        break;
-                    } else {
-                        if (!errorDisplayed) {
-                            System.out.println("Error! Please enter a number between 1 and " + intervalOfHidden + ".");
-                            System.out.print("Enter your guesses again: ");
-                            errorDisplayed = true;
-                        }
+	while (true) {
+	   try {
+		if (guesses.length != countOfHidden) {
+		   System.out.print("\nYou must enter exactly " + countOfHidden + " numbers.\nEnter your guesses again: ");
+                   continue; 
+		}
+		for (int i = 0; i < countOfHidden; i++) {
+                    if (guesses[i] < 1 || guesses[i] > intervalOfHidden) {
+                        System.out.println("Numbers must be between 1 and " + intervalOfHidden+"\nEnter your guesses again: ");
                     }
-                } catch (Exception e) {
-                    if (!errorDisplayed) {
-                        System.out.println("Error! Please enter a valid number.");
-                        System.out.print("Enter your guesses again: ");
-                        errorDisplayed = true;
-                    }
-                    scanner.next();
                 }
+                break;
+            } catch (Exception e) {
+                System.out.print("\nInvalid input! " + e.getMessage()+"\nEnter your guesses again: ");
             }
         }
         return guesses;
     }
+		
     public static int ifGuessesTrue(int[] cargoLocations, int [] guesses){
         int countTrueGuesses = 0;
         for (int cargoLocation : cargoLocations) {
