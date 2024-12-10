@@ -78,21 +78,30 @@ public class Main {
     }
     
     public static int[] getUserGuesses(Scanner scanner, int countOfHidden, int intervalOfHidden) {
-        int [] guesses = new int[countOfHidden];
+        int[] guesses = new int[countOfHidden];
         while (true) {
             try {
+                String input = scanner.nextLine();
+                String[] inputs = input.trim().split("\\s+");
+
+
+                if (inputs.length != countOfHidden) {
+                    throw new IllegalArgumentException("You must enter exactly " + countOfHidden + " numbers.");
+                }
+
                 for (int i = 0; i < countOfHidden; i++) {
-                    int guess = scanner.nextInt();
+                    int guess = Integer.parseInt(inputs[i]);
                     if (guess < 1 || guess > intervalOfHidden) {
-                        throw new IllegalArgumentException();
+                        throw new IllegalArgumentException("Numbers must be between 1 and " + intervalOfHidden + ".");
                     }
                     guesses[i] = guess;
                 }
                 break;
-                
-            } catch (Exception e) {
-                System.out.print("Error! Enter " + countOfHidden + " numbers between 1 and " + intervalOfHidden + ".\nEnter your guess again: ");
-                scanner.nextLine();
+
+            } catch (NumberFormatException e) {
+                System.out.print("Error! Enter valid numbers only.\nEnter your guess again: ");
+            } catch (IllegalArgumentException e) {
+                System.out.print("Error! " + e.getMessage() + "\nEnter your guess again: ");
             }
         }
         return guesses;
